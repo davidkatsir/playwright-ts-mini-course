@@ -18,6 +18,7 @@ test("Sanity test", async ({ page }) => {
   await page.locator('[data-test="firstName"]').fill("David");
   await page.locator('[data-test="lastName"]').click();
   await page.locator('[data-test="lastName"]').fill("Katsir");
+  await page.pause();
   await page.locator("form").click();
   await page.locator('[data-test="postalCode"]').click();
   await page.locator('[data-test="postalCode"]').fill("17080200");
