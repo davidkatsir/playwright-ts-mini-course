@@ -1,13 +1,13 @@
 import { test } from "@playwright/test";
 import LoginPage from "../.github/pages/LoginPage";
-
-const username = "standard_user";
-const password = "secret_sauce";
+import UserCredentials from "../helpers/UserCredentials";
 
 test("Sanity test", async ({ page }) => {
-  await page.goto("https://www.saucedemo.com/");
   const loginPage = new LoginPage(page);
-  await loginPage.loginToApplication(username, password);
+  await loginPage.loginToApplication(
+    UserCredentials.PERFORMANCE_GLITCH_USER,
+    UserCredentials.CORRECT_PASSWORD
+  );
 
   await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
   await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
@@ -30,8 +30,17 @@ test("Sanity test", async ({ page }) => {
 });
 
 test("Demo test", async ({ page }) => {
-  await page.goto("https://www.saucedemo.com/");
   const loginPage = new LoginPage(page);
-  await loginPage.loginToApplication(username, password);
+  await loginPage.loginToApplication(
+    UserCredentials.LOCKED_OUT_USER,
+    UserCredentials.CORRECT_PASSWORD
+  );
+});
 
+test("Demo test_2", async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.loginToApplication(
+    UserCredentials.STANDARD_USER,
+    UserCredentials.CORRECT_PASSWORD
+  );
 });

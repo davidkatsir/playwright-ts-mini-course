@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+import ApplicationURL from "../../helpers/ApplicationURL";
 
 export default class LoginPage {
   userNameField: Locator;
@@ -12,6 +13,7 @@ export default class LoginPage {
   }
 
   public async loginToApplication(username: string, password: string) {
+    await this.page.goto(ApplicationURL.BASE_URL);
     await this.userNameField.fill(username);
     await this.passwordField.fill(password);
     await this.loginButton.click();
