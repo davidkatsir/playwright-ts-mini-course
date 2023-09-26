@@ -1,5 +1,6 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page, expect } from "@playwright/test";
 import ApplicationURL from "../../helpers/ApplicationURL";
+import UserCredentials from "../../helpers/UserCredentials";
 
 export default class LoginPage {
   userNameField: Locator;
@@ -12,10 +13,21 @@ export default class LoginPage {
     this.loginButton = this.page.locator('[data-test="login-button"]');
   }
 
-  public async loginToApplication(username: string, password: string) {
-    await this.page.goto(ApplicationURL.BASE_URL);
+  public async loginToApplication(
+    username = UserCredentials.STANDARD_USER,
+    password = UserCredentials.CORRECT_PASSWORD,
+    url = ApplicationURL.BASE_URL
+  ) {
+    await this.page.goto(url);
+    await this.validatePageUrl(ApplicationURL.BASE_URL);
+    
     await this.userNameField.fill(username);
     await this.passwordField.fill(password);
     await this.loginButton.click();
+    await this.validatePageUrl(`${ApplicationURL.BASE_URL}inventory.html`);
+  }
+
+  public async validatePageUrl(url: string) {
+    await expect(this.page).toHaveURL(url);
   }
 }

@@ -1,13 +1,11 @@
 import { test } from "@playwright/test";
 import LoginPage from "../.github/pages/LoginPage";
 import UserCredentials from "../helpers/UserCredentials";
+import ApplicationURL from "../helpers/ApplicationURL";
 
 test("Sanity test", async ({ page }) => {
   const loginPage = new LoginPage(page);
-  await loginPage.loginToApplication(
-    UserCredentials.PERFORMANCE_GLITCH_USER,
-    UserCredentials.CORRECT_PASSWORD
-  );
+  await loginPage.loginToApplication();
 
   await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
   await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
@@ -29,18 +27,11 @@ test("Sanity test", async ({ page }) => {
   await page.getByRole("link", { name: "Logout" }).click();
 });
 
-test("Demo test", async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  await loginPage.loginToApplication(
-    UserCredentials.LOCKED_OUT_USER,
-    UserCredentials.CORRECT_PASSWORD
-  );
-});
-
 test("Demo test_2", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginToApplication(
     UserCredentials.STANDARD_USER,
-    UserCredentials.CORRECT_PASSWORD
+    UserCredentials.CORRECT_PASSWORD,
+    ApplicationURL.BASE_URL
   );
 });
