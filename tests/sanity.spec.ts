@@ -1,7 +1,8 @@
 import { test } from "@playwright/test";
 import LoginPage from "../.github/pages/LoginPage";
-import UserCredentials from "../helpers/UserCredentials";
 import ApplicationURL from "../helpers/ApplicationURL";
+import UserCredentials from "../helpers/UserCredentials";
+import ProductsPage from "../.github/pages/ProductsPage";
 
 test("Sanity test", async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -34,4 +35,7 @@ test("Demo test_2", async ({ page }) => {
     UserCredentials.CORRECT_PASSWORD,
     ApplicationURL.BASE_URL
   );
+  const productsPage = new ProductsPage(page);
+  await productsPage.validatePageUrl(`${ApplicationURL.BASE_URL}inventory.html`);
+  await productsPage.validateTitle('Products');
 });

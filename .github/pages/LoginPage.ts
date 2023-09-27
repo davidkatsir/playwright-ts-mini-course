@@ -3,9 +3,9 @@ import ApplicationURL from "../../helpers/ApplicationURL";
 import UserCredentials from "../../helpers/UserCredentials";
 
 export default class LoginPage {
-  userNameField: Locator;
-  passwordField: Locator;
-  loginButton: Locator;
+  private userNameField: Locator;
+  private passwordField: Locator;
+  private loginButton: Locator;
 
   constructor(protected page: Page) {
     this.userNameField = this.page.locator('[data-test="username"]');
@@ -20,7 +20,7 @@ export default class LoginPage {
   ) {
     await this.page.goto(url);
     await this.validatePageUrl(ApplicationURL.BASE_URL);
-    
+
     await this.userNameField.fill(username);
     await this.passwordField.fill(password);
     await this.loginButton.click();
