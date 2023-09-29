@@ -1,8 +1,8 @@
-import { Locator, Page, expect } from "@playwright/test";
-import ApplicationURL from "../../helpers/ApplicationURL";
-import UserCredentials from "../../helpers/UserCredentials";
-import { ErrorMessages } from "../../helpers/ErrorMessages";
+import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import ApplicationURL from "../helpers/ApplicationURL";
+import { ErrorMessages } from "../helpers/ErrorMessages";
+import UserCredentials from "../helpers/UserCredentials";
 
 export default class LoginPage extends BasePage {
   private userNameField: Locator;

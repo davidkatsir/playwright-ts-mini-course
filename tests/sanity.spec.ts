@@ -1,8 +1,8 @@
 import { test } from "@playwright/test";
-import LoginPage from "../.github/pages/LoginPage";
+import ProductsPage from "../pages/ProductsPage";
 import ApplicationURL from "../helpers/ApplicationURL";
 import UserCredentials from "../helpers/UserCredentials";
-import ProductsPage from "../.github/pages/ProductsPage";
+import LoginPage from "../pages/LoginPage";
 
 test("Sanity test", async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -37,5 +37,5 @@ test("Demo test_2", async ({ page }) => {
   );
   const productsPage = new ProductsPage(page);
   await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-  await productsPage.validateTitle('Products');
+  await productsPage.validateTitle("Products");
 });

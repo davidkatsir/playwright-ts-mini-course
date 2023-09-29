@@ -1,9 +1,8 @@
-import LoginPage from "../../.github/pages/LoginPage";
-
 import { test } from "@playwright/test";
+import ApplicationURL from "../../helpers/ApplicationURL";
 import { ErrorMessages } from "../../helpers/ErrorMessages";
 import UserCredentials from "../../helpers/UserCredentials";
-import ApplicationURL from "../../helpers/ApplicationURL";
+import LoginPage from "../../pages/LoginPage";
 
 test.describe("Negative Login Scenarios", () => {
   let loginPage: LoginPage;
