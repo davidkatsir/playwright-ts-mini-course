@@ -36,6 +36,6 @@ test("Demo test_2", async ({ page }) => {
     ApplicationURL.BASE_URL
   );
   const productsPage = new ProductsPage(page);
-  await productsPage.validatePageUrl(`${ApplicationURL.BASE_URL}inventory.html`);
+  await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
   await productsPage.validateTitle('Products');
 });

@@ -2,14 +2,16 @@ import { Locator, Page, expect } from "@playwright/test";
 import ApplicationURL from "../../helpers/ApplicationURL";
 import UserCredentials from "../../helpers/UserCredentials";
 import { ErrorMessages } from "../../helpers/ErrorMessages";
+import { BasePage } from "./BasePage";
 
-export default class LoginPage {
+export default class LoginPage extends BasePage {
   private userNameField: Locator;
   private passwordField: Locator;
   private loginButton: Locator;
   private errorMessage: Locator;
 
   constructor(protected page: Page) {
+    super(page);
     this.userNameField = this.page.locator('[data-test="username"]');
     this.passwordField = this.page.locator('[data-test="password"]');
     this.loginButton = this.page.locator('[data-test="login-button"]');
@@ -29,11 +31,7 @@ export default class LoginPage {
     await this.loginButton.click();
   }
 
-  public async validatePageUrl(url: string) {
-    await expect(this.page).toHaveURL(url);
-  }
-
   public async validateErrorMessage(errorMessage: ErrorMessages) {
-    await expect(this.errorMessage).toContainText(errorMessage.valueOf());
+    await this.validateElementText(this.errorMessage, errorMessage.valueOf());
   }
 }

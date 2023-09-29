@@ -1,18 +1,15 @@
 import { Locator, Page, expect } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export default class ProductsPage {
-  private pageTitle: Locator;
+export default class ProductsPage extends BasePage {
+  private pageTitleElement: Locator;
 
   constructor(protected page: Page) {
-    this.pageTitle = this.page.locator('[class="title"]');
+    super(page);
+    this.pageTitleElement = this.page.locator('[class="title"]');
   }
 
   public async validateTitle(title: string) {
-    await expect(this.pageTitle).toContainText(title);
+    await this.validateElementText(this.pageTitleElement, title);
   }
-
-  public async validatePageUrl(url: string) {
-    await expect(this.page).toHaveURL(url);
-  }
-  
 }
