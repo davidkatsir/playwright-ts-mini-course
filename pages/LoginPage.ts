@@ -19,8 +19,8 @@ export default class LoginPage extends BasePage {
   }
 
   public async loginToApplication(
-    username = UserCredentials.STANDARD_USER,
-    password = UserCredentials.CORRECT_PASSWORD,
+    username = process.env.STANDARD_USER as string,
+    password = process.env.CORRECT_PASSWORD as string,
     url = ApplicationURL.BASE_URL
   ) {
     await this.page.goto(url);

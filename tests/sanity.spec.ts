@@ -31,8 +31,8 @@ test("Sanity test", async ({ page }) => {
 test("Demo test_2", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.loginToApplication(
-    UserCredentials.STANDARD_USER,
-    UserCredentials.CORRECT_PASSWORD,
+    process.env.STANDARD_USER,
+    process.env.CORRECT_PASSWORD,
     ApplicationURL.BASE_URL
   );
   const productsPage = new ProductsPage(page);

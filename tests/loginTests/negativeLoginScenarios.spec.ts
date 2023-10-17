@@ -11,7 +11,7 @@ test.describe("Negative Login Scenarios", () => {
   });
 
   test("Login with locked_out_user", async ({ page }) => {
-    await loginPage.loginToApplication(UserCredentials.LOCKED_OUT_USER);
+    await loginPage.loginToApplication(process.env.LOCKED_OUT_USER);
     await loginPage.validateErrorMessage(ErrorMessages.LOGIN_WITH_LOCKED_USER);
     await loginPage.validatePageUrl(ApplicationURL.BASE_URL);
   });
@@ -26,7 +26,7 @@ test.describe("Negative Login Scenarios", () => {
 
   test("Login with incorrect Password", async ({ page }) => {
     await loginPage.loginToApplication(
-      UserCredentials.STANDARD_USER,
+      process.env.STANDARD_USER,
       "wrongPWD"
     );
     await loginPage.validateErrorMessage(
