@@ -17,6 +17,7 @@ test.describe("Positive Login Scenarios", () => {
   test("Login with problem_user", async ({ page }) => {
     await loginPage.loginToApplication(process.env.PROBLEM_USER);
     await loginPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
+    
   });
 
   test("Login with performance_glitch_user", async ({ page }) => {
