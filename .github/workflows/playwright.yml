@@ -19,6 +19,12 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
+      env:
+        STANDARD_USER: ${{vars.STANDARD_USER}}
+        LOCKED_OUT_USER: ${{vars.LOCKED_OUT_USER}}
+        PROBLEM_USER: ${{vars.PROBLEM_USER}}
+        PERFORMANCE_GLITCH_USER: ${{vars.PERFORAE_GLITCH_USER}}
+        CORRECT_PASSWORD: ${{vars.CORRECT_PASSWORD}}
     - uses: actions/upload-artifact@v3
       if: always()
       with:
