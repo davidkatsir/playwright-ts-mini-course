@@ -1,7 +1,6 @@
 import { test } from "@playwright/test";
 import ApplicationURL from "../../helpers/ApplicationURL";
 import { ErrorMessages } from "../../helpers/ErrorMessages";
-import UserCredentials from "../../helpers/UserCredentials";
 import LoginPage from "../../pages/LoginPage";
 
 test.describe("Negative Login Scenarios", () => {
@@ -25,10 +24,7 @@ test.describe("Negative Login Scenarios", () => {
   });
 
   test("Login with incorrect Password", async ({ page }) => {
-    await loginPage.loginToApplication(
-      process.env.STANDARD_USER,
-      "wrongPWD"
-    );
+    await loginPage.loginToApplication(process.env.STANDARD_USER, "wrongPWD");
     await loginPage.validateErrorMessage(
       ErrorMessages.LOGIN_WITH_INCORRECT_CREDENTIALS
     );

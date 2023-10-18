@@ -1,7 +1,6 @@
-import UserCredentials from "../../helpers/UserCredentials";
 import { test } from "@playwright/test";
-import LoginPage from "../../pages/LoginPage";
 import ApplicationURL from "../../helpers/ApplicationURL";
+import LoginPage from "../../pages/LoginPage";
 
 test.describe("Positive Login Scenarios", () => {
   let loginPage: LoginPage;

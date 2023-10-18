@@ -1,8 +1,7 @@
 import { Locator, Page } from "@playwright/test";
-import { BasePage } from "./BasePage";
 import ApplicationURL from "../helpers/ApplicationURL";
 import { ErrorMessages } from "../helpers/ErrorMessages";
-import UserCredentials from "../helpers/UserCredentials";
+import { BasePage } from "./BasePage";
 
 export default class LoginPage extends BasePage {
   private userNameField: Locator;
