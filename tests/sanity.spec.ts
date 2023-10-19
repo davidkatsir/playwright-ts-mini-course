@@ -14,6 +14,9 @@ test("Sanity test", async ({ page }) => {
   await productsPage.chooseProductByTitle("Sauce Labs Fleece Jacket");
   await productsPage.chooseProductByTitle("Sauce Labs Onesie");
 
+  await productsPage.validateNumberOfItems("3");
+
+  await productsPage.goToCart();
   await page.locator("a").filter({ hasText: "3" }).click();
   await page.locator('[data-test="checkout"]').click();
   await page.locator('[data-test="firstName"]').fill("David");

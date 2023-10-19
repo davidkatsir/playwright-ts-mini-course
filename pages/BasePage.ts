@@ -14,4 +14,10 @@ export abstract class BasePage {
       await expect(element).toContainText(expectedText);
     });
   }
+
+  protected async clickElement(element: Locator) {
+    await test.step(`Clicking the '${element}' element`, async () => {
+      await element.click();
+    });
+  }
 }
