@@ -40,11 +40,13 @@ export default class ProductsPage extends BasePage {
   }
 
   public async validateNumberOfItems(expectedNumberOfItems: string) {
-    await this.validateElementText(this.shopingCartElement, expectedNumberOfItems);
+    await this.validateElementText(
+      this.shopingCartElement,
+      expectedNumberOfItems
+    );
   }
 
-public async goToCart(){
-  await this.clickElement(this.shopingCartElement);
-}
-
+  public async goToCart() {
+    await this.clickElement(this.shopingCartElement);
+  }
 }
