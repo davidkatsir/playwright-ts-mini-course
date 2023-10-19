@@ -1,18 +1,19 @@
 import { test } from "@playwright/test";
-import ProductsPage from "../pages/ProductsPage";
 import ApplicationURL from "../helpers/ApplicationURL";
-import UserCredentials from "../helpers/UserCredentials";
 import LoginPage from "../pages/LoginPage";
+import ProductsPage from "../pages/ProductsPage";
 
 test("Sanity test", async ({ page }) => {
   const loginPage = new LoginPage(page);
+  const productsPage = new ProductsPage(page);
   await loginPage.loginToApplication();
+  await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
+  await productsPage.validateTitle("Products");
 
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-  await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
-  await page
-    .locator('[data-test="add-to-cart-sauce-labs-fleece-jacket"]')
-    .click();
+  await productsPage.chooseProductByTitle("Sauce Labs Backpack");
+  await productsPage.chooseProductByTitle("Sauce Labs Fleece Jacket");
+  await productsPage.chooseProductByTitle("Sauce Labs Onesie");
+
   await page.locator("a").filter({ hasText: "3" }).click();
   await page.locator('[data-test="checkout"]').click();
   await page.locator('[data-test="firstName"]').fill("David");
