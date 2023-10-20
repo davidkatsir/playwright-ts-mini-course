@@ -2,10 +2,12 @@ import { test } from "@playwright/test";
 import ApplicationURL from "../helpers/ApplicationURL";
 import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
+import YourCartPage from "../pages/YourCartPage";
 
 test("Sanity test", async ({ page }) => {
   const loginPage = new LoginPage(page);
   const productsPage = new ProductsPage(page);
+  const yourCartPage = new YourCartPage(page);
   await loginPage.loginToApplication();
   await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
   await productsPage.validateTitle("Products");
@@ -17,7 +19,9 @@ test("Sanity test", async ({ page }) => {
   await productsPage.validateNumberOfItems("3");
 
   await productsPage.goToCart();
-  await page.locator("a").filter({ hasText: "3" }).click();
+
+await yourCartPage.validatePageUrl(ApplicationURL.YOUR_CART_PAGE_URL);
+  // await page.locator("a").filter({ hasText: "3" }).click();
   await page.locator('[data-test="checkout"]').click();
   await page.locator('[data-test="firstName"]').fill("David");
   await page.locator('[data-test="lastName"]').fill("Katsir");
