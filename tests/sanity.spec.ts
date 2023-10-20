@@ -20,8 +20,8 @@ test("Sanity test", async ({ page }) => {
 
   await productsPage.goToCart();
 
-await yourCartPage.validatePageUrl(ApplicationURL.YOUR_CART_PAGE_URL);
-  // await page.locator("a").filter({ hasText: "3" }).click();
+  await yourCartPage.validatePageUrl(ApplicationURL.YOUR_CART_PAGE_URL);
+  await yourCartPage.validateTitle("Your Cart");
   await page.locator('[data-test="checkout"]').click();
   await page.locator('[data-test="firstName"]').fill("David");
   await page.locator('[data-test="lastName"]').fill("Katsir");

@@ -9,6 +9,10 @@ export abstract class BasePage {
     });
   }
 
+  public async validateTitle(title: string) {
+    await this.validateElementText(this.page.locator('[class="title"]'), title);
+  }
+
   protected async validateElementText(element: Locator, expectedText: string) {
     await test.step(`Validating that a correct element text is ${expectedText}`, async () => {
       await expect(element).toContainText(expectedText);

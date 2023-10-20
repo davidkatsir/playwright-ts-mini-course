@@ -17,6 +17,8 @@ export default class LoginPage extends BasePage {
     this.errorMessage = this.page.locator('[data-test="error"]');
   }
 
+  
+
   public async loginToApplication(
     username = process.env.STANDARD_USER as string,
     password = process.env.CORRECT_PASSWORD as string,

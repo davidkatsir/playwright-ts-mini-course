@@ -1,24 +1,18 @@
-import { Locator, Page, expect } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export default class ProductsPage extends BasePage {
-  private pageTitleElement: Locator;
   private itemDescriptionElement: Locator;
   private shopingCartElement: Locator;
 
   constructor(protected page: Page) {
     super(page);
-    this.pageTitleElement = this.page.locator('[class="title"]');
     this.itemDescriptionElement = this.page.locator(
       '[class="inventory_item_description"]'
     );
     this.shopingCartElement = this.page.locator(
       'a[class="shopping_cart_link"]'
     );
-  }
-
-  public async validateTitle(title: string) {
-    await this.validateElementText(this.pageTitleElement, title);
   }
 
   // public async chooseProductByTitle(expextedProductTitle: string) {
