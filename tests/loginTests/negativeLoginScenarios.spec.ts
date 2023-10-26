@@ -9,13 +9,13 @@ test.describe("Negative Login Scenarios", () => {
     loginPage = new LoginPage(page);
   });
 
-  test("Login with locked_out_user", async ({ page }) => {
+  test("Login with locked_out_user", async () => {
     await loginPage.loginToApplication(process.env.LOCKED_OUT_USER);
     await loginPage.validateErrorMessage(ErrorMessages.LOGIN_WITH_LOCKED_USER);
     await loginPage.validatePageUrl(ApplicationURL.BASE_URL);
   });
 
-  test("Login with incorrect Username", async ({ page }) => {
+  test("Login with incorrect Username", async () => {
     await loginPage.loginToApplication("incorrectUser");
     await loginPage.validateErrorMessage(
       ErrorMessages.LOGIN_WITH_INCORRECT_CREDENTIALS
@@ -23,7 +23,7 @@ test.describe("Negative Login Scenarios", () => {
     await loginPage.validatePageUrl(ApplicationURL.BASE_URL);
   });
 
-  test("Login with incorrect Password", async ({ page }) => {
+  test("Login with incorrect Password", async () => {
     await loginPage.loginToApplication(process.env.STANDARD_USER, "wrongPWD");
     await loginPage.validateErrorMessage(
       ErrorMessages.LOGIN_WITH_INCORRECT_CREDENTIALS
