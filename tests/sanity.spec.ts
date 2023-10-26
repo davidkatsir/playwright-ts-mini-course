@@ -1,10 +1,11 @@
 import { test } from "@playwright/test";
 import ApplicationURL from "../helpers/ApplicationURL";
+import PageTitles from "../helpers/PageTitles";
 import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
 import YourCartPage from "../pages/YourCartPage";
 
-test("Sanity test", async ({ page }) => {
+test("Sanity Test", async ({ page }) => {
   const loginPage = new LoginPage(page);
   const productsPage = new ProductsPage(page);
   const yourCartPage = new YourCartPage(page);
@@ -21,7 +22,7 @@ test("Sanity test", async ({ page }) => {
   await productsPage.goToCart();
 
   await yourCartPage.validatePageUrl(ApplicationURL.YOUR_CART_PAGE_URL);
-  await yourCartPage.validateTitle("Your Cart");
+  await yourCartPage.validateTitle(PageTitles.YOUR_CART_PAGE);
   await page.locator('[data-test="checkout"]').click();
   await page.locator('[data-test="firstName"]').fill("David");
   await page.locator('[data-test="lastName"]').fill("Katsir");
