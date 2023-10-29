@@ -1,6 +1,7 @@
 import { test } from "@playwright/test";
 import ApplicationURL from "../helpers/ApplicationURL";
 import PageTitles from "../helpers/PageTitles";
+import CheckoutYourInformationPage from "../pages/CheckoutYourInformationPage";
 import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
 import YourCartPage from "../pages/YourCartPage";
@@ -16,6 +17,7 @@ test.describe("Sanity Tests Block", () => {
     const loginPage = new LoginPage(page);
     const productsPage = new ProductsPage(page);
     const yourCartPage = new YourCartPage(page);
+    const checkoutYourInfoPage = new CheckoutYourInformationPage(page);
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
     await productsPage.validateTitle("Products");
@@ -30,13 +32,22 @@ test.describe("Sanity Tests Block", () => {
 
     await yourCartPage.validatePageUrl(ApplicationURL.YOUR_CART_PAGE_URL);
     await yourCartPage.validateTitle(PageTitles.YOUR_CART_PAGE);
-    await page.locator('[data-test="checkout"]').click();
-    await page.locator('[data-test="firstName"]').fill("David");
-    await page.locator('[data-test="lastName"]').fill("Katsir");
+    await yourCartPage.validateNumberOfItems(products.length);
+    await yourCartPage.validateItemExistsInCart(products[0]);
+    await yourCartPage.validateItemExistsInCart(products[1]);
+    await yourCartPage.validateItemExistsInCart(products[2]);
+    await yourCartPage.goToCheckout();
     // await page.pause();
-    await page.locator("form").click();
-    await page.locator('[data-test="postalCode"]').fill("17080200");
-    await page.locator('[data-test="continue"]').click();
+
+    await checkoutYourInfoPage.validatePageUrl(
+      ApplicationURL.CHECKOUT_YOUR_INFO_PAGE_URL
+    );
+    await checkoutYourInfoPage.validateTitle(
+      PageTitles.CHECKOUT_YOUR_INFO_PAGE
+    );
+    await checkoutYourInfoPage.fillInformation("David", "Katsir", "17000");
+    await checkoutYourInfoPage.goToCheckoutOverview();
+
     await page.locator('[data-test="finish"]').click();
     await page.locator('[data-test="back-to-products"]').click();
     await page.getByRole("button", { name: "Open Menu" }).click();

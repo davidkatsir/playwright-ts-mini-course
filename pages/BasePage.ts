@@ -24,4 +24,10 @@ export abstract class BasePage {
       await element.click();
     });
   }
+
+  protected async fillText(element: Locator, textToFill: string) {
+    await test.step(`Filling '${textToFill}' into the '${element}' element`, async () => {
+      await element.fill(textToFill);
+    });
+  }
 }
