@@ -66,7 +66,9 @@ test.describe("Sanity Tests Block", () => {
       ApplicationURL.CHECKOUT_COMPLETE_PAGE_URL
     );
     await checkoutCompletePage.validateTitle(PageTitles.CHECKOUT_COMPLETE_PAGE);
-    await checkoutCompletePage.validateFinalMessage(checkoutCompletePageFinalMessage);
+    await checkoutCompletePage.validateFinalMessage(
+      checkoutCompletePageFinalMessage
+    );
 
     // await page.locator('[data-test="back-to-products"]').click();
     // await page.getByRole("button", { name: "Open Menu" }).click();
