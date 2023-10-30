@@ -1,12 +1,12 @@
 import { test } from "@playwright/test";
 import ApplicationURL from "../helpers/ApplicationURL";
 import PageTitles from "../helpers/PageTitles";
+import CheckoutCompletePage from "../pages/CheckoutCompletePage";
 import CheckoutOverviewPage from "../pages/CheckoutOverviewPage";
 import CheckoutYourInformationPage from "../pages/CheckoutYourInformationPage";
 import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
 import YourCartPage from "../pages/YourCartPage";
-import CheckoutCompletePage from "../pages/checkoutCompletePage";
 
 test.describe("Sanity Tests Block", () => {
   const products = [
