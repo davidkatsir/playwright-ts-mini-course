@@ -1,10 +1,12 @@
 import { test } from "@playwright/test";
 import ApplicationURL from "../helpers/ApplicationURL";
 import PageTitles from "../helpers/PageTitles";
+import CheckoutOverviewPage from "../pages/CheckoutOverviewPage";
 import CheckoutYourInformationPage from "../pages/CheckoutYourInformationPage";
 import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
 import YourCartPage from "../pages/YourCartPage";
+import CheckoutCompletePage from "../pages/checkoutCompletePage";
 
 test.describe("Sanity Tests Block", () => {
   const products = [
@@ -12,12 +14,18 @@ test.describe("Sanity Tests Block", () => {
     "Sauce Labs Fleece Jacket",
     "Sauce Labs Onesie",
   ];
+  const firstName = "David";
+  const lastName = "Katsir";
+  const postalCode = "17000";
+  const checkoutCompletePageFinalMessage = "Thank you for your order!";
 
   test("Validate doing simple transaction", async ({ page }) => {
     const loginPage = new LoginPage(page);
     const productsPage = new ProductsPage(page);
     const yourCartPage = new YourCartPage(page);
     const checkoutYourInfoPage = new CheckoutYourInformationPage(page);
+    const checkoutOverviewPage = new CheckoutOverviewPage(page);
+    const checkoutCompletePage = new CheckoutCompletePage(page);
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
     await productsPage.validateTitle("Products");
@@ -45,13 +53,24 @@ test.describe("Sanity Tests Block", () => {
     await checkoutYourInfoPage.validateTitle(
       PageTitles.CHECKOUT_YOUR_INFO_PAGE
     );
-    await checkoutYourInfoPage.fillInformation("David", "Katsir", "17000");
+    await checkoutYourInfoPage.fillInformation(firstName, lastName, postalCode);
     await checkoutYourInfoPage.goToCheckoutOverview();
 
-    await page.locator('[data-test="finish"]').click();
-    await page.locator('[data-test="back-to-products"]').click();
-    await page.getByRole("button", { name: "Open Menu" }).click();
-    await page.getByRole("link", { name: "Reset App State" }).click();
-    await page.getByRole("link", { name: "Logout" }).click();
+    await checkoutOverviewPage.validatePageUrl(
+      ApplicationURL.CHECKOUT_OVERVIEW_PAGE_URL
+    );
+    await checkoutOverviewPage.validateTitle(PageTitles.CHECKOUT_OVERVIEW_PAGE);
+    await checkoutOverviewPage.clickFinnishButton();
+
+    await checkoutCompletePage.validatePageUrl(
+      ApplicationURL.CHECKOUT_COMPLETE_PAGE_URL
+    );
+    await checkoutCompletePage.validateTitle(PageTitles.CHECKOUT_COMPLETE_PAGE);
+    await checkoutCompletePage.validateFinalMessage(checkoutCompletePageFinalMessage);
+
+    // await page.locator('[data-test="back-to-products"]').click();
+    // await page.getByRole("button", { name: "Open Menu" }).click();
+    // await page.getByRole("link", { name: "Reset App State" }).click();
+    // await page.getByRole("link", { name: "Logout" }).click();
   });
 });

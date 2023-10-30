@@ -3,5 +3,6 @@ export default class ApplicationURL {
   public static readonly INVENTORY_PAGE_URL = `${ApplicationURL.BASE_URL}inventory.html`;
   public static readonly YOUR_CART_PAGE_URL = `${ApplicationURL.BASE_URL}cart.html`;
   public static readonly CHECKOUT_YOUR_INFO_PAGE_URL = `${ApplicationURL.BASE_URL}checkout-step-one.html`;
-
+  public static readonly CHECKOUT_OVERVIEW_PAGE_URL = `${ApplicationURL.BASE_URL}checkout-step-two.html`;
+  public static readonly CHECKOUT_COMPLETE_PAGE_URL = `${ApplicationURL.BASE_URL}checkout-complete.html`;
 }
