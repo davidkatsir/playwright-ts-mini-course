@@ -22,6 +22,20 @@ test.describe("API Test Block", () => {
     const singleUserResponse = await request.get(`${baseUrl}/api/users/2`);
     
     expect(singleUserResponse.status()).toBe(200);
+    expect(singleUserResponse.statusText()).toBe('OK');
+    expect(await singleUserResponse.json()).toEqual(responseUserId2Data);
 
   });
+
+  test("Validate user creation by API call", async ({ request }) => {
+
+    const userData = {
+      "name": "David",
+      "job": "Automation Developer"
+  }
+    const userCreationResponse = await request.post(`${baseUrl}/api/users`,{data: userData})
+
+  });
+
+
 });
