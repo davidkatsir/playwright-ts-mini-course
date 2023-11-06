@@ -4,6 +4,7 @@ import { BasePage } from "./BasePage";
 export default class ProductsPage extends BasePage {
   private itemDescriptionElement: Locator;
   private shopingCartElement: Locator;
+  private inventoryItemNameElement: Locator;
 
   constructor(protected page: Page) {
     super(page);
@@ -12,6 +13,9 @@ export default class ProductsPage extends BasePage {
     );
     this.shopingCartElement = this.page.locator(
       'a[class="shopping_cart_link"]'
+    );
+    this.inventoryItemNameElement = this.page.locator(
+      '[class="inventory_item_name "]'
     );
   }
 
@@ -32,6 +36,25 @@ export default class ProductsPage extends BasePage {
       .locator("button")
       .click();
   }
+
+  /********************************************************************************************** */
+
+  public async validateProductsByItemNames(expectedProductNames: string[]) {
+    const allItemNameElements = await this.inventoryItemNameElement.all();
+
+    if (expectedProductNames.length !== allItemNameElements.length) {
+      throw new Error("Number of product names and elements don't match.");
+    }
+
+    for (let i = 0; i < expectedProductNames.length; i++) {
+      await this.validateElementText(
+        allItemNameElements[i],
+        expectedProductNames[i]
+      );
+    }
+  }
+
+  //**************************************************************************************************** */
 
   public async validateNumberOfItems(expectedNumberOfItems: string) {
     await this.validateElementText(
