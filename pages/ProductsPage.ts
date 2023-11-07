@@ -5,6 +5,7 @@ export default class ProductsPage extends BasePage {
   private itemDescriptionElement: Locator;
   private shopingCartElement: Locator;
   private inventoryItemNameElement: Locator;
+  private sortSelect: string;
 
   constructor(protected page: Page) {
     super(page);
@@ -17,6 +18,7 @@ export default class ProductsPage extends BasePage {
     this.inventoryItemNameElement = this.page.locator(
       '[class="inventory_item_name "]'
     );
+    this.sortSelect = '[data-test="product_sort_container"]';
   }
 
   // public async chooseProductByTitle(expextedProductTitle: string) {
@@ -37,15 +39,11 @@ export default class ProductsPage extends BasePage {
       .click();
   }
 
-  /********************************************************************************************** */
-
   public async validateProductsByItemNames(expectedProductNames: string[]) {
     const allItemNameElements = await this.inventoryItemNameElement.all();
-
     if (expectedProductNames.length !== allItemNameElements.length) {
       throw new Error("Number of product names and elements don't match.");
     }
-
     for (let i = 0; i < expectedProductNames.length; i++) {
       await this.validateElementText(
         allItemNameElements[i],
@@ -53,8 +51,6 @@ export default class ProductsPage extends BasePage {
       );
     }
   }
-
-  //**************************************************************************************************** */
 
   public async validateNumberOfItems(expectedNumberOfItems: string) {
     await this.validateElementText(
@@ -65,5 +61,9 @@ export default class ProductsPage extends BasePage {
 
   public async goToCart() {
     await this.clickElement(this.shopingCartElement);
+  }
+
+  public async selectDropdownOption(optionValue: string) {
+    await this.page.locator(this.sortSelect).selectOption(optionValue);
   }
 }
