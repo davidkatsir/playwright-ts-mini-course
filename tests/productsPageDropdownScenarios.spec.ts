@@ -4,6 +4,7 @@ import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
 
 test.describe("products Page Dropdown Scenarios block", () => {
+  const pageTitle = "Products";
   const productsDefaultListNameAtoZ: string[] = [
     "Sauce Labs Backpack",
     "Sauce Labs Bike Light",
@@ -53,7 +54,7 @@ test.describe("products Page Dropdown Scenarios block", () => {
     const productsPage = new ProductsPage(page);
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle("Products");
+    await productsPage.validateTitle(pageTitle);
     // await page.pause();
     await productsPage.selectDropdownOption(dropdownOptions[0]);
     await productsPage.validateProductsByItemNames(productsDefaultListNameAtoZ);
@@ -68,7 +69,7 @@ test.describe("products Page Dropdown Scenarios block", () => {
     const productsPage = new ProductsPage(page);
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle("Products");
+    await productsPage.validateTitle(pageTitle);
     // await page.pause();
     await productsPage.selectDropdownOption(dropdownOptions[1]);
     await productsPage.validateProductsByItemNames(productsListNameZtoA);
@@ -83,7 +84,7 @@ test.describe("products Page Dropdown Scenarios block", () => {
     const productsPage = new ProductsPage(page);
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle("Products");
+    await productsPage.validateTitle(pageTitle);
     // await page.pause();
     await productsPage.selectDropdownOption(dropdownOptions[2]);
     await productsPage.validateProductsByItemNames(productsListPriceLowToHigh);
@@ -98,7 +99,7 @@ test.describe("products Page Dropdown Scenarios block", () => {
     const productsPage = new ProductsPage(page);
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle("Products");
+    await productsPage.validateTitle(pageTitle);
     // await page.pause();
     await productsPage.selectDropdownOption(dropdownOptions[3]);
     await productsPage.validateProductsByItemNames(productsListPriceHighToLow);

@@ -1,11 +1,12 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page, expect } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export default class ProductsPage extends BasePage {
   private itemDescriptionElement: Locator;
   private shopingCartElement: Locator;
   private inventoryItemNameElement: Locator;
-  private sortSelect: string;
+  private sortSelect: Locator;
+  private cartBadgeSelector: Locator;
 
   constructor(protected page: Page) {
     super(page);
@@ -18,7 +19,8 @@ export default class ProductsPage extends BasePage {
     this.inventoryItemNameElement = this.page.locator(
       '[class="inventory_item_name "]'
     );
-    this.sortSelect = '[data-test="product_sort_container"]';
+    this.sortSelect = this.page.locator('[data-test="product_sort_container"]');
+    this.cartBadgeSelector = this.page.locator('[class="shopping_cart_badge"]');
   }
 
   // public async chooseProductByTitle(expextedProductTitle: string) {
@@ -59,11 +61,15 @@ export default class ProductsPage extends BasePage {
     );
   }
 
+  public async ValidateCartIsEmpty() {
+    await expect(this.cartBadgeSelector).not.toBeVisible();
+  }
+
   public async goToCart() {
     await this.clickElement(this.shopingCartElement);
   }
 
   public async selectDropdownOption(optionValue: string) {
-    await this.page.locator(this.sortSelect).selectOption(optionValue);
+    await this.sortSelect.selectOption(optionValue);
   }
 }

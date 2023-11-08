@@ -9,6 +9,7 @@ import ProductsPage from "../pages/ProductsPage";
 import YourCartPage from "../pages/YourCartPage";
 
 test.describe("Sanity Tests Block", () => {
+  const pageTitleProducts = "Products";
   const products = [
     "Sauce Labs Backpack",
     "Sauce Labs Fleece Jacket",
@@ -28,7 +29,7 @@ test.describe("Sanity Tests Block", () => {
     const checkoutCompletePage = new CheckoutCompletePage(page);
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle("Products");
+    await productsPage.validateTitle(pageTitleProducts);
 
     await productsPage.chooseProductByTitle(products[0]);
     await productsPage.chooseProductByTitle(products[1]);
@@ -69,10 +70,5 @@ test.describe("Sanity Tests Block", () => {
     await checkoutCompletePage.validateFinalMessage(
       checkoutCompletePageFinalMessage
     );
-
-    // await page.locator('[data-test="back-to-products"]').click();
-    // await page.getByRole("button", { name: "Open Menu" }).click();
-    // await page.getByRole("link", { name: "Reset App State" }).click();
-    // await page.getByRole("link", { name: "Logout" }).click();
   });
 });
