@@ -1,9 +1,15 @@
 import { test } from "@playwright/test";
+import ApplicationURL from "../helpers/ApplicationURL";
 import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
-import ApplicationURL from "../helpers/ApplicationURL";
 
 test.describe("products Page Dropdown Scenarios block", () => {
+  let loginPage: LoginPage;
+  let productsPage: ProductsPage;
+  test.beforeEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+    productsPage = new ProductsPage(page);
+  });
   const pageTitleProducts = "Products";
   const productsList: string[] = [
     "Sauce Labs Backpack",
@@ -19,9 +25,6 @@ test.describe("products Page Dropdown Scenarios block", () => {
   //  Products Page =>  Add one item to basket => and in the same button =>
   //  Remove the item (without going to the cart) => verify that the shopping cart gets empty again
   test("Add and Remove item without going to the cart ", async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    const productsPage = new ProductsPage(page);
-
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
     await productsPage.validateTitle(pageTitleProducts);
