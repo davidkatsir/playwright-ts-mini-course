@@ -7,44 +7,62 @@ import CheckoutYourInformationPage from "../pages/CheckoutYourInformationPage";
 import LoginPage from "../pages/LoginPage";
 import YourCartPage from "../pages/YourCartPage";
 import ProductsPage from "../pages/productsPage/ProductsPage";
+import ProductsPageData from "../pages/productsPage/ProductsPageData";
 
 test.describe("Sanity Tests Block", () => {
-  const pageTitleProducts = "Products";
-  const products = [
-    "Sauce Labs Backpack",
-    "Sauce Labs Fleece Jacket",
-    "Sauce Labs Onesie",
-  ];
+  let loginPage: LoginPage;
+  let productsPage: ProductsPage;
+  let productsPageData: ProductsPageData;
+  let yourCartPage: YourCartPage;
+  let checkoutYourInfoPage: CheckoutYourInformationPage;
+  let checkoutOverviewPage: CheckoutOverviewPage;
+  let checkoutCompletePage: CheckoutCompletePage;
   const firstName = "David";
   const lastName = "Katsir";
   const postalCode = "17000";
   const checkoutCompletePageFinalMessage = "Thank you for your order!";
 
+  test.beforeEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+    productsPage = new ProductsPage(page);
+    productsPageData = new ProductsPageData();
+    yourCartPage = new YourCartPage(page);
+    checkoutYourInfoPage = new CheckoutYourInformationPage(page);
+    checkoutOverviewPage = new CheckoutOverviewPage(page);
+    checkoutCompletePage = new CheckoutCompletePage(page);
+  });
+
   test("Validate doing simple transaction", async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    const productsPage = new ProductsPage(page);
-    const yourCartPage = new YourCartPage(page);
-    const checkoutYourInfoPage = new CheckoutYourInformationPage(page);
-    const checkoutOverviewPage = new CheckoutOverviewPage(page);
-    const checkoutCompletePage = new CheckoutCompletePage(page);
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle(pageTitleProducts);
+    await productsPage.validateTitle(productsPageData.pageTitleProducts);
 
-    await productsPage.chooseProductByTitle(products[0]);
-    await productsPage.chooseProductByTitle(products[1]);
-    await productsPage.chooseProductByTitle(products[2]);
+    await productsPage.chooseProductByTitle(
+      productsPageData.productsDefaultListNameAtoZ[0]
+    );
+    await productsPage.chooseProductByTitle(
+      productsPageData.productsDefaultListNameAtoZ[3]
+    );
+    await productsPage.chooseProductByTitle(
+      productsPageData.productsDefaultListNameAtoZ[4]
+    );
 
-    await productsPage.validateNumberOfItems(products.length.toString());
+    await productsPage.validateNumberOfItems("3");
 
     await productsPage.goToCart();
 
     await yourCartPage.validatePageUrl(ApplicationURL.YOUR_CART_PAGE_URL);
     await yourCartPage.validateTitle(PageTitles.YOUR_CART_PAGE);
-    await yourCartPage.validateNumberOfItems(products.length);
-    await yourCartPage.validateItemExistsInCart(products[0]);
-    await yourCartPage.validateItemExistsInCart(products[1]);
-    await yourCartPage.validateItemExistsInCart(products[2]);
+    await yourCartPage.validateNumberOfItems(3);
+    await yourCartPage.validateItemExistsInCart(
+      productsPageData.productsDefaultListNameAtoZ[0]
+    );
+    await yourCartPage.validateItemExistsInCart(
+      productsPageData.productsDefaultListNameAtoZ[3]
+    );
+    await yourCartPage.validateItemExistsInCart(
+      productsPageData.productsDefaultListNameAtoZ[4]
+    );
     await yourCartPage.goToCheckout();
     // await page.pause();
 

@@ -3,12 +3,14 @@ import ApplicationURL from "../helpers/ApplicationURL";
 import PageTitles from "../helpers/PageTitles";
 import CheckoutYourInformationPage from "../pages/CheckoutYourInformationPage";
 import LoginPage from "../pages/LoginPage";
-import ProductsPage from "../pages/productsPage/ProductsPage";
 import YourCartPage from "../pages/YourCartPage";
+import ProductsPage from "../pages/productsPage/ProductsPage";
+import ProductsPageData from "../pages/productsPage/ProductsPageData";
 
 test.describe("products Page Dropdown Scenarios block", () => {
   let loginPage: LoginPage;
   let productsPage: ProductsPage;
+  let productsPageData: ProductsPageData;
   let yourCartPage: YourCartPage;
   let checkoutYourInfoPage: CheckoutYourInformationPage;
   const firstName = "David";
@@ -18,18 +20,10 @@ test.describe("products Page Dropdown Scenarios block", () => {
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     productsPage = new ProductsPage(page);
+    productsPageData = new ProductsPageData();
     yourCartPage = new YourCartPage(page);
     checkoutYourInfoPage = new CheckoutYourInformationPage(page);
   });
-  const pageTitleProducts = "Products";
-  const productsList: string[] = [
-    "Sauce Labs Backpack",
-    "Sauce Labs Bike Light",
-    "Sauce Labs Bolt T-Shirt",
-    "Sauce Labs Fleece Jacket",
-    "Sauce Labs Onesie",
-    "Test.allTheThings() T-Shirt (Red)",
-  ];
 
   //  Test Case 05:
   //  Login and navigate to Products Page
@@ -38,12 +32,16 @@ test.describe("products Page Dropdown Scenarios block", () => {
   test("Add and Remove item without going to the cart ", async ({ page }) => {
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle(pageTitleProducts);
+    await productsPage.validateTitle(productsPageData.pageTitleProducts);
     // Add item to cart
-    await productsPage.chooseProductByTitle(productsList[0]);
+    await productsPage.chooseProductByTitle(
+      productsPageData.productsDefaultListNameAtoZ[0]
+    );
     await productsPage.validateNumberOfItems("1");
     // Remove the same item from the cart
-    await productsPage.chooseProductByTitle(productsList[0]);
+    await productsPage.chooseProductByTitle(
+      productsPageData.productsDefaultListNameAtoZ[0]
+    );
     await productsPage.validateCartIsEmpty();
   });
 
@@ -58,17 +56,23 @@ test.describe("products Page Dropdown Scenarios block", () => {
   }) => {
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle(pageTitleProducts);
+    await productsPage.validateTitle(productsPageData.pageTitleProducts);
     // Add item to cart
-    await productsPage.chooseProductByTitle(productsList[0]);
+    await productsPage.chooseProductByTitle(
+      productsPageData.productsDefaultListNameAtoZ[0]
+    );
     await productsPage.goToCart();
     await yourCartPage.validatePageUrl(ApplicationURL.YOUR_CART_PAGE_URL);
     await yourCartPage.validateTitle(PageTitles.YOUR_CART_PAGE);
     await yourCartPage.validateNumberOfItems(1);
-    await yourCartPage.validateItemExistsInCart(productsList[0]);
+    await yourCartPage.validateItemExistsInCart(
+      productsPageData.productsDefaultListNameAtoZ[0]
+    );
     await yourCartPage.continueShopping();
     // Add another item to cart
-    await productsPage.chooseProductByTitle(productsList[1]);
+    await productsPage.chooseProductByTitle(
+      productsPageData.productsDefaultListNameAtoZ[1]
+    );
     await productsPage.goToCart();
     await yourCartPage.validateNumberOfItems(2);
     await yourCartPage.goToCheckout();
@@ -92,10 +96,10 @@ test.describe("products Page Dropdown Scenarios block", () => {
   //  Products Page =>  Add one item to basket => Go to shopping cart => Click on 'Continue shopping' => Add another item to basket =>
   //  Go to shopping cart => Varify you have correct items in the cart => Click on 'Checkout' => Add all details =>
   //  Click on 'Cancel' => See that you got back to 'Your Cart' page => See that the number of items in the shopping cart is correct (2) => Remove one of the items =>
-  //  Validate cart content and number of items (1) => Click on 'Checkout' => Add all details => Continue => 
+  //  Validate cart content and number of items (1) => Click on 'Checkout' => Add all details => Continue =>
   //  Validate 'Checkout: Overview' page fileds: Cart content (Item decription), Payment Information, Shipping Information,
-  //  Price Total and Total => Click on 'Finish' button => 
-  //  Validate 'Checkout: Complete!' page message ('Thank you for your order!') => Click on 'Back Home' button => 
+  //  Price Total and Total => Click on 'Finish' button =>
+  //  Validate 'Checkout: Complete!' page message ('Thank you for your order!') => Click on 'Back Home' button =>
   //  Validate you got back to 'Products' page.
   // test("Product page ", async ({ page }) => {
 
