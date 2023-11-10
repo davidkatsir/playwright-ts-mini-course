@@ -1,18 +1,25 @@
 import { test } from "@playwright/test";
 import ApplicationURL from "../helpers/ApplicationURL";
+import PageTitles from "../helpers/PageTitles";
+import CheckoutYourInformationPage from "../pages/CheckoutYourInformationPage";
 import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
 import YourCartPage from "../pages/YourCartPage";
-import PageTitles from "../helpers/PageTitles";
 
 test.describe("products Page Dropdown Scenarios block", () => {
   let loginPage: LoginPage;
   let productsPage: ProductsPage;
   let yourCartPage: YourCartPage;
+  let checkoutYourInfoPage: CheckoutYourInformationPage;
+  const firstName = "David";
+  const lastName = "Katsir";
+  const emptyPostalCode = "";
+  const expectedErrorMessage = "Error: Postal Code is required";
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     productsPage = new ProductsPage(page);
     yourCartPage = new YourCartPage(page);
+    checkoutYourInfoPage = new CheckoutYourInformationPage(page);
   });
   const pageTitleProducts = "Products";
   const productsList: string[] = [
@@ -42,11 +49,13 @@ test.describe("products Page Dropdown Scenarios block", () => {
 
   //  Test Case 06:
   //  Login and navigate to Products Page
-  //  Products Page =>  Add one item to basket => Go to shopping cart => Click on 'Continue shopping' 
+  //  Products Page =>  Add one item to basket => Go to shopping cart => Click on 'Continue shopping'
   //  => Add another item to basket =>
   //  Go to shopping cart => Click on 'Checkout' => Add all details except for Postal code =>
   //  See that you get error message: 'Error: Postal Code is required'
-  test("On 'Checkout' do not Add all details => Check Error message ", async ({ page }) => {
+  test("On 'Checkout' do not Add all details => Check Error message ", async ({
+    page,
+  }) => {
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
     await productsPage.validateTitle(pageTitleProducts);
@@ -57,12 +66,25 @@ test.describe("products Page Dropdown Scenarios block", () => {
     await yourCartPage.validateTitle(PageTitles.YOUR_CART_PAGE);
     await yourCartPage.validateNumberOfItems(1);
     await yourCartPage.validateItemExistsInCart(productsList[0]);
-    
-
-
-
-
-
+    await yourCartPage.continueShopping();
+    // Add another item to cart
+    await productsPage.chooseProductByTitle(productsList[1]);
+    await productsPage.goToCart();
+    await yourCartPage.validateNumberOfItems(2);
+    await yourCartPage.goToCheckout();
+    await checkoutYourInfoPage.validatePageUrl(
+      ApplicationURL.CHECKOUT_YOUR_INFO_PAGE_URL
+    );
+    await checkoutYourInfoPage.validateTitle(
+      PageTitles.CHECKOUT_YOUR_INFO_PAGE
+    );
+    await checkoutYourInfoPage.fillInformation(
+      firstName,
+      lastName,
+      emptyPostalCode
+    );
+    await checkoutYourInfoPage.goToCheckoutOverview();
+    await checkoutYourInfoPage.validateErrorMessage(expectedErrorMessage);
   });
 
   //  Test Case 07:
