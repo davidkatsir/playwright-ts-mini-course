@@ -90,8 +90,13 @@ test.describe("products Page Dropdown Scenarios block", () => {
   //  Test Case 07:
   //  Login and navigate to Products Page
   //  Products Page =>  Add one item to basket => Go to shopping cart => Click on 'Continue shopping' => Add another item to basket =>
-  //  Go to shopping cart => Click on 'Checkout' => Add all details =>
-  //  Click on 'Cancel' => See that you got to 'Your Cart' page => See that the number of items in the shopping cart is correct.
+  //  Go to shopping cart => Varify you have correct items in the cart => Click on 'Checkout' => Add all details =>
+  //  Click on 'Cancel' => See that you got back to 'Your Cart' page => See that the number of items in the shopping cart is correct (2) => Remove one of the items =>
+  //  Validate cart content and number of items (1) => Click on 'Checkout' => Add all details => Continue => 
+  //  Validate 'Checkout: Overview' page fileds: Cart content (Item decription), Payment Information, Shipping Information,
+  //  Price Total and Total => Click on 'Finish' button => 
+  //  Validate 'Checkout: Complete!' page message ('Thank you for your order!') => Click on 'Back Home' button => 
+  //  Validate you got back to 'Products' page.
   // test("Product page ", async ({ page }) => {
 
   // });
