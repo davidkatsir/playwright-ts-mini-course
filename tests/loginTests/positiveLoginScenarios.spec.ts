@@ -2,7 +2,7 @@ import { test } from "@playwright/test";
 import ApplicationURL from "../../helpers/ApplicationURL";
 import PageTitles from "../../helpers/PageTitles";
 import LoginPage from "../../pages/LoginPage";
-import ProductsPage from "../../pages/ProductsPage";
+import ProductsPage from "../../pages/productsPage/ProductsPage";
 
 test.describe("Positive Login Scenarios", () => {
   let loginPage: LoginPage;

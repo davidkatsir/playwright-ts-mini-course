@@ -3,7 +3,7 @@ import ApplicationURL from "../helpers/ApplicationURL";
 import PageTitles from "../helpers/PageTitles";
 import CheckoutYourInformationPage from "../pages/CheckoutYourInformationPage";
 import LoginPage from "../pages/LoginPage";
-import ProductsPage from "../pages/ProductsPage";
+import ProductsPage from "../pages/productsPage/ProductsPage";
 import YourCartPage from "../pages/YourCartPage";
 
 test.describe("products Page Dropdown Scenarios block", () => {
@@ -44,7 +44,7 @@ test.describe("products Page Dropdown Scenarios block", () => {
     await productsPage.validateNumberOfItems("1");
     // Remove the same item from the cart
     await productsPage.chooseProductByTitle(productsList[0]);
-    await productsPage.ValidateCartIsEmpty();
+    await productsPage.validateCartIsEmpty();
   });
 
   //  Test Case 06:

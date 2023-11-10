@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { BasePage } from "./BasePage";
+import { BasePage } from "../BasePage";
 
 export default class ProductsPage extends BasePage {
   private itemDescriptionElement: Locator;
@@ -61,7 +61,7 @@ export default class ProductsPage extends BasePage {
     );
   }
 
-  public async ValidateCartIsEmpty() {
+  public async validateCartIsEmpty() {
     await expect(this.cartBadgeSelector).not.toBeVisible();
   }
 

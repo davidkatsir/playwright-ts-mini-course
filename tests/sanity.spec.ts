@@ -5,8 +5,8 @@ import CheckoutCompletePage from "../pages/CheckoutCompletePage";
 import CheckoutOverviewPage from "../pages/CheckoutOverviewPage";
 import CheckoutYourInformationPage from "../pages/CheckoutYourInformationPage";
 import LoginPage from "../pages/LoginPage";
-import ProductsPage from "../pages/ProductsPage";
 import YourCartPage from "../pages/YourCartPage";
+import ProductsPage from "../pages/productsPage/ProductsPage";
 
 test.describe("Sanity Tests Block", () => {
   const pageTitleProducts = "Products";

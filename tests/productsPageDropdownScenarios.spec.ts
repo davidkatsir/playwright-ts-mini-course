@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import ApplicationURL from "../helpers/ApplicationURL";
 import LoginPage from "../pages/LoginPage";
-import ProductsPage from "../pages/ProductsPage";
+import ProductsPage from "../pages/productsPage/ProductsPage";
 
 test.describe("products Page Dropdown Scenarios block", () => {
   const pageTitle = "Products";
