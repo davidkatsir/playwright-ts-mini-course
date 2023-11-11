@@ -35,7 +35,7 @@ test.describe("Sanity Tests Block", () => {
   test("Validate doing simple transaction", async ({ page }) => {
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle(productsPageData.pageTitleProducts);
+    await productsPage.validateTitle(PageTitles.INVENTORY_PAGE);
 
     await productsPage.chooseProductByTitle(
       productsPageData.productsDefaultListNameAtoZ[0]

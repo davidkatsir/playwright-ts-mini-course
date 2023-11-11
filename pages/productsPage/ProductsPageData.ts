@@ -7,7 +7,6 @@ export default class ProductsPageData {
   public dropdownOptions: string[] = [];
 
   constructor() {
-    this.pageTitleProducts = "Products";
     this.productsDefaultListNameAtoZ = [
       "Sauce Labs Backpack",
       "Sauce Labs Bike Light",

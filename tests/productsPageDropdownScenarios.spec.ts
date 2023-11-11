@@ -1,5 +1,6 @@
 import { test } from "@playwright/test";
 import ApplicationURL from "../helpers/ApplicationURL";
+import PageTitles from "../helpers/PageTitles";
 import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/productsPage/ProductsPage";
 import ProductsPageData from "../pages/productsPage/ProductsPageData";
@@ -21,7 +22,7 @@ test.describe("products Page Dropdown Scenarios block", () => {
   test("Product page Dropdown = Name (A to Z)", async ({ page }) => {
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle(productsPageData.pageTitleProducts);
+    await productsPage.validateTitle(PageTitles.INVENTORY_PAGE);
     // await page.pause();
     await productsPage.selectDropdownOption(
       productsPageData.dropdownOptions[0]
@@ -38,7 +39,7 @@ test.describe("products Page Dropdown Scenarios block", () => {
   test("Product page Dropdown = Name (Z to A)", async ({ page }) => {
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle(productsPageData.pageTitleProducts);
+    await productsPage.validateTitle(PageTitles.INVENTORY_PAGE);
     // await page.pause();
     await productsPage.selectDropdownOption(
       productsPageData.dropdownOptions[1]
@@ -55,7 +56,7 @@ test.describe("products Page Dropdown Scenarios block", () => {
   test("Product page Dropdown = Price (low to high)", async ({ page }) => {
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle(productsPageData.pageTitleProducts);
+    await productsPage.validateTitle(PageTitles.INVENTORY_PAGE);
     // await page.pause();
     await productsPage.selectDropdownOption(
       productsPageData.dropdownOptions[2]
@@ -72,7 +73,7 @@ test.describe("products Page Dropdown Scenarios block", () => {
   test("Product page Dropdown = Price (high to low)", async ({ page }) => {
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle(productsPageData.pageTitleProducts);
+    await productsPage.validateTitle(PageTitles.INVENTORY_PAGE);
     // await page.pause();
     await productsPage.selectDropdownOption(
       productsPageData.dropdownOptions[3]
