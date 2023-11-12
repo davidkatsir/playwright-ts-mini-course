@@ -115,6 +115,7 @@ test.describe("Sales E2E and Basic Scenarios", () => {
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
     await productsPage.validateTitle(PageTitles.INVENTORY_PAGE);
     // Add item to cart
+    await page.pause();
     await productsPage.chooseProductByTitle(
       productsPageData.productsDefaultListNameAtoZ[0]
     );
@@ -146,6 +147,20 @@ test.describe("Sales E2E and Basic Scenarios", () => {
       PageTitles.CHECKOUT_YOUR_INFO_PAGE
     );
     await checkoutYourInfoPage.fillInformation(firstName, lastName, postalCode);
-    await checkoutYourInfoPage.goToCheckoutOverview();
+    // Click on 'Cancel' => See that you got back to 'Your Cart' page
+    await checkoutYourInfoPage.cancelCheckout();
+    await yourCartPage.validatePageUrl(ApplicationURL.YOUR_CART_PAGE_URL);
+    await yourCartPage.validateTitle(PageTitles.YOUR_CART_PAGE);
+    await yourCartPage.validateNumberOfItems(2);
+
+    // Remove last item (productsDefaultListNameAtoZ[1]) => Validate cart content and number of items (1)
+    await yourCartPage.removeItemFromCart(
+      productsPageData.productsDefaultListNameAtoZ[1]
+    );
+    await yourCartPage.validateNumberOfItems(1);
+    await yourCartPage.validateItemExistsInCart(
+      productsPageData.productsDefaultListNameAtoZ[0]
+    );
+    await yourCartPage.goToCheckout();
   });
 });

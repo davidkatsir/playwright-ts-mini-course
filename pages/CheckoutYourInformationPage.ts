@@ -6,6 +6,7 @@ export default class CheckoutYourInformationPage extends BasePage {
   private lastNameTextField: Locator;
   private postalCodeTextField: Locator;
   private continueButton: Locator;
+  private cancelButton: Locator;
   private errorMessageTextElement: Locator;
 
   constructor(protected page: Page) {
@@ -14,6 +15,7 @@ export default class CheckoutYourInformationPage extends BasePage {
     this.lastNameTextField = this.page.locator('[data-test="lastName"]');
     this.postalCodeTextField = this.page.locator('[data-test="postalCode"]');
     this.continueButton = this.page.locator('[data-test="continue"]');
+    this.cancelButton = this.page.locator('[data-test="cancel"]');
     this.errorMessageTextElement = this.page.locator('[data-test="error"]');
   }
 
@@ -29,6 +31,10 @@ export default class CheckoutYourInformationPage extends BasePage {
 
   public async goToCheckoutOverview() {
     await this.clickElement(this.continueButton);
+  }
+
+  public async cancelCheckout() {
+    await this.clickElement(this.cancelButton);
   }
 
   public async validateErrorMessage(expectedErrorMessage: string) {
