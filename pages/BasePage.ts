@@ -1,7 +1,10 @@
 import test, { Locator, Page, expect } from "@playwright/test";
 
 export abstract class BasePage {
-  constructor(protected page: Page) {}
+  private cartItemName: Locator;
+  constructor(protected page: Page) {
+    this.cartItemName = this.page.locator('[class="inventory_item_name"]');
+  }
 
   public async validatePageUrl(url: string) {
     await test.step(`Validating that a correct value of URL is ${url}`, async () => {
@@ -29,5 +32,11 @@ export abstract class BasePage {
     await test.step(`Filling '${textToFill}' into the '${element}' element`, async () => {
       await element.fill(textToFill);
     });
+  }
+
+  public async validateItemExistsInCart(productName: string) {
+    await expect(
+      this.cartItemName.filter({ hasText: productName })
+    ).toBeVisible();
   }
 }

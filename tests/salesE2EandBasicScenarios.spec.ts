@@ -167,7 +167,7 @@ test.describe("Sales E2E and Basic Scenarios", () => {
     await yourCartPage.goToCheckout();
     await checkoutYourInfoPage.fillInformation(firstName, lastName, postalCode);
     await checkoutYourInfoPage.goToCheckoutOverview();
-    // await checkoutYourInfoPage.
+    await checkoutYourInfoPage.validateItemExistsInCart(productsPageData.productsDefaultListNameAtoZ[0]);
 
 
     
