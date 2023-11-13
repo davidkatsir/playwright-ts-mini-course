@@ -94,21 +94,24 @@ test.describe("Sales E2E and Basic Scenarios", () => {
 
   // Test Case 07:
   // Login and navigate to Products Page
-  // => Products Page =>  Add one item to basket => Go to shopping cart
-  // => Click on 'Continue shopping'
-  // => Add another item to basket => Go to shopping cart
-  // => Varify you have correct items in the cart
-  // => Click on 'Checkout' => Add all details
-  // => Click on 'Cancel' => See that you got back to 'Your Cart' page
-  // => See that the number of items in the shopping cart is correct (2)
-  // => Remove one of the items => Validate cart content and number of items (1)
-  // => Click on 'Checkout' => Add all details => Continue
-  // => Validate the following 'Checkout: Overview' page fileds:
+  // => Products Page =>  Add one item to basket => Go to shopping cart 
+  // => Click on 'Continue shopping' 
+  // => Add another item to basket => Go to shopping cart 
+  // => Varify you have correct items in the cart 
+  // => Click on 'Checkout' => Add all details   
+  // => Click on 'Cancel' 
+  // => See that you got back to 'Your Cart' page 
+  // => See that the number of items in the shopping cart is correct (2) 
+  // => Remove last item (productsDefaultListNameAtoZ[1]) 
+  // => Validate cart content and number of items (1) 
+  // => Click on 'Checkout' 
+  // => Add all details => Continue 
+  // => Validate the following 'Checkout: Overview' page fileds: 
   // 'Cart content (Item decription)', 'Payment Information', 'Shipping Information',
-  // 'Price Total' and 'Total'
-  // => Click on 'Finish' button
-  // => Validate 'Checkout: Complete!' page message ('Thank you for your order!')
-  // => Click on 'Back Home' button
+  // 'Price Total' and 'Total' 
+  // => Click on 'Finish' button 
+  // => Validate 'Checkout: Complete!' page message ('Thank you for your order!') 
+  // => Click on 'Back Home' button 
   // => Validate you got back to 'Products' page.
   test("Sales E2E plus fields validations ", async ({ page }) => {
     await loginPage.loginToApplication();
@@ -162,5 +165,11 @@ test.describe("Sales E2E and Basic Scenarios", () => {
       productsPageData.productsDefaultListNameAtoZ[0]
     );
     await yourCartPage.goToCheckout();
+    await checkoutYourInfoPage.fillInformation(firstName, lastName, postalCode);
+    await checkoutYourInfoPage.goToCheckoutOverview();
+    // await checkoutYourInfoPage.
+
+
+    
   });
 });
