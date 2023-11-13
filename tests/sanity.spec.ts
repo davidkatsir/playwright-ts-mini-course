@@ -79,7 +79,7 @@ test.describe("Sanity Tests Block", () => {
       ApplicationURL.CHECKOUT_OVERVIEW_PAGE_URL
     );
     await checkoutOverviewPage.validateTitle(PageTitles.CHECKOUT_OVERVIEW_PAGE);
-    await checkoutOverviewPage.clickFinnishButton();
+    await checkoutOverviewPage.clickFinishButton();
 
     await checkoutCompletePage.validatePageUrl(
       ApplicationURL.CHECKOUT_COMPLETE_PAGE_URL

@@ -1,6 +1,8 @@
 import { test } from "@playwright/test";
 import ApplicationURL from "../helpers/ApplicationURL";
 import PageTitles from "../helpers/PageTitles";
+import CheckoutCompletePage from "../pages/CheckoutCompletePage";
+import CheckoutOverviewPage from "../pages/CheckoutOverviewPage";
 import CheckoutYourInformationPage from "../pages/CheckoutYourInformationPage";
 import LoginPage from "../pages/LoginPage";
 import YourCartPage from "../pages/YourCartPage";
@@ -13,17 +15,26 @@ test.describe("Sales E2E and Basic Scenarios", () => {
   let productsPageData: ProductsPageData;
   let yourCartPage: YourCartPage;
   let checkoutYourInfoPage: CheckoutYourInformationPage;
+  let checkoutOverviewPage: CheckoutOverviewPage;
+  let checkoutCompletePage: CheckoutCompletePage;
   const firstName = "David";
   const lastName = "Katsir";
   const postalCode = "17000";
   const emptyPostalCode = "";
   const expectedErrorMessage = "Error: Postal Code is required";
+  const priceTotalItemTotalValue = "Item total: $29.99";
+  const priceTotalTaxValue = "Tax: $2.40";
+  const totalValue = "Total: $32.39";
+  const orderCompleteMessage = "Thank you for your order!";
+
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     productsPage = new ProductsPage(page);
     productsPageData = new ProductsPageData();
     yourCartPage = new YourCartPage(page);
     checkoutYourInfoPage = new CheckoutYourInformationPage(page);
+    checkoutOverviewPage = new CheckoutOverviewPage(page);
+    checkoutCompletePage = new CheckoutCompletePage(page);
   });
 
   //  Test Case 05:
@@ -94,31 +105,30 @@ test.describe("Sales E2E and Basic Scenarios", () => {
 
   // Test Case 07:
   // Login and navigate to Products Page
-  // => Products Page =>  Add one item to basket => Go to shopping cart 
-  // => Click on 'Continue shopping' 
-  // => Add another item to basket => Go to shopping cart 
-  // => Varify you have correct items in the cart 
-  // => Click on 'Checkout' => Add all details   
-  // => Click on 'Cancel' 
-  // => See that you got back to 'Your Cart' page 
-  // => See that the number of items in the shopping cart is correct (2) 
-  // => Remove last item (productsDefaultListNameAtoZ[1]) 
-  // => Validate cart content and number of items (1) 
-  // => Click on 'Checkout' 
-  // => Add all details => Continue 
-  // => Validate the following 'Checkout: Overview' page fileds: 
-  // 'Cart content (Item decription)', 'Payment Information', 'Shipping Information',
-  // 'Price Total' and 'Total' 
-  // => Click on 'Finish' button 
-  // => Validate 'Checkout: Complete!' page message ('Thank you for your order!') 
-  // => Click on 'Back Home' button 
+  // => Products Page =>  Add one item to basket => Go to shopping cart
+  // => Click on 'Continue shopping'
+  // => Add another item to basket => Go to shopping cart
+  // => Varify you have correct items in the cart
+  // => Click on 'Checkout' => Add all details
+  // => Click on 'Cancel'
+  // => See that you got back to 'Your Cart' page
+  // => See that the number of items in the shopping cart is correct (2)
+  // => Remove last item (productsDefaultListNameAtoZ[1])
+  // => Validate cart content and number of items (1)
+  // => Click on 'Checkout'
+  // => Add all details => Continue
+  // => Validate the following 'Checkout: Overview' page fileds:
+  // 'Cart content (Item decription)', 'Price Total' and 'Total'
+  // => Click on 'Finish' button
+  // => Validate 'Checkout: Complete!' page message ('Thank you for your order!')
+  // => Click on 'Back Home' button
   // => Validate you got back to 'Products' page.
   test("Sales E2E plus fields validations ", async ({ page }) => {
     await loginPage.loginToApplication();
     await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
     await productsPage.validateTitle(PageTitles.INVENTORY_PAGE);
     // Add item to cart
-    await page.pause();
+    // await page.pause();
     await productsPage.chooseProductByTitle(
       productsPageData.productsDefaultListNameAtoZ[0]
     );
@@ -155,7 +165,6 @@ test.describe("Sales E2E and Basic Scenarios", () => {
     await yourCartPage.validatePageUrl(ApplicationURL.YOUR_CART_PAGE_URL);
     await yourCartPage.validateTitle(PageTitles.YOUR_CART_PAGE);
     await yourCartPage.validateNumberOfItems(2);
-
     // Remove last item (productsDefaultListNameAtoZ[1]) => Validate cart content and number of items (1)
     await yourCartPage.removeItemFromCart(
       productsPageData.productsDefaultListNameAtoZ[1]
@@ -167,9 +176,20 @@ test.describe("Sales E2E and Basic Scenarios", () => {
     await yourCartPage.goToCheckout();
     await checkoutYourInfoPage.fillInformation(firstName, lastName, postalCode);
     await checkoutYourInfoPage.goToCheckoutOverview();
-    await checkoutYourInfoPage.validateItemExistsInCart(productsPageData.productsDefaultListNameAtoZ[0]);
-
-
-    
+    // Validate 'Checkout: Overview' page fileds
+    await checkoutOverviewPage.validateItemExistsInCart(
+      productsPageData.productsDefaultListNameAtoZ[0]
+    );
+    await checkoutOverviewPage.validatePriceTotalItemTotalValue(
+      priceTotalItemTotalValue
+    );
+    await checkoutOverviewPage.validatePriceTotalTaxValue(priceTotalTaxValue);
+    await checkoutOverviewPage.validateTotalValue(totalValue);
+    await checkoutOverviewPage.clickFinishButton();
+    await checkoutCompletePage.validateFinalMessage(orderCompleteMessage);
+    // Click on 'Back Home' button
+    await checkoutCompletePage.goBackToProducts();
+    await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
+    await productsPage.validateTitle(PageTitles.INVENTORY_PAGE);
   });
 });
