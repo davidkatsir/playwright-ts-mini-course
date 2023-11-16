@@ -12,6 +12,69 @@ interface IResponse {
 
 test.describe("API Tests Block", () => {
   const baseUrl = "https://reqres.in";
+  const ststusTextOk = "OK";
+  const ststusTextNotFound = "Not Found";
+
+  test("Validate Users List Response by GET API call", async ({ request }) => {
+    const usersListResponseData = {
+      page: 2,
+      per_page: 6,
+      total: 12,
+      total_pages: 2,
+      data: [
+        {
+          id: 7,
+          email: "michael.lawson@reqres.in",
+          first_name: "Michael",
+          last_name: "Lawson",
+          avatar: "https://reqres.in/img/faces/7-image.jpg",
+        },
+        {
+          id: 8,
+          email: "lindsay.ferguson@reqres.in",
+          first_name: "Lindsay",
+          last_name: "Ferguson",
+          avatar: "https://reqres.in/img/faces/8-image.jpg",
+        },
+        {
+          id: 9,
+          email: "tobias.funke@reqres.in",
+          first_name: "Tobias",
+          last_name: "Funke",
+          avatar: "https://reqres.in/img/faces/9-image.jpg",
+        },
+        {
+          id: 10,
+          email: "byron.fields@reqres.in",
+          first_name: "Byron",
+          last_name: "Fields",
+          avatar: "https://reqres.in/img/faces/10-image.jpg",
+        },
+        {
+          id: 11,
+          email: "george.edwards@reqres.in",
+          first_name: "George",
+          last_name: "Edwards",
+          avatar: "https://reqres.in/img/faces/11-image.jpg",
+        },
+        {
+          id: 12,
+          email: "rachel.howell@reqres.in",
+          first_name: "Rachel",
+          last_name: "Howell",
+          avatar: "https://reqres.in/img/faces/12-image.jpg",
+        },
+      ],
+      support: {
+        url: "https://reqres.in/#support-heading",
+        text: "To keep ReqRes free, contributions towards server costs are appreciated!",
+      },
+    };
+    const usersListResponse = await request.get(`${baseUrl}/api/users?page=2`);
+    expect(usersListResponse.status()).toBe(200);
+    expect(usersListResponse.statusText()).toBe(ststusTextOk);
+    expect(await usersListResponse.json()).toEqual(usersListResponseData);
+  });
 
   test("Validate getting a single user by API call", async ({ request }) => {
     const responseUserId2Data = {
@@ -27,12 +90,127 @@ test.describe("API Tests Block", () => {
         text: "To keep ReqRes free, contributions towards server costs are appreciated!",
       },
     };
-
     const singleUserResponse = await request.get(`${baseUrl}/api/users/2`);
-
     expect(singleUserResponse.status()).toBe(200);
-    expect(singleUserResponse.statusText()).toBe("OK");
+    expect(singleUserResponse.statusText()).toBe(ststusTextOk);
     expect(await singleUserResponse.json()).toEqual(responseUserId2Data);
+  });
+
+  test("Validate Single user Not Found by GET API call", async ({
+    request,
+  }) => {
+    const responseSingleUserNotFound = {};
+    const singleUserNotFoundResponse = await request.get(
+      `${baseUrl}/api/users/23`
+    );
+    expect(singleUserNotFoundResponse.status()).toBe(404);
+    expect(singleUserNotFoundResponse.statusText()).toBe(ststusTextNotFound);
+    expect(await singleUserNotFoundResponse.json()).toEqual(
+      responseSingleUserNotFound
+    );
+  });
+
+  test("Validate getting LIST <RESOURCE> by GET API call", async ({
+    request,
+  }) => {
+    const responseListResource = {
+      page: 1,
+      per_page: 6,
+      total: 12,
+      total_pages: 2,
+      data: [
+        {
+          id: 1,
+          name: "cerulean",
+          year: 2000,
+          color: "#98B2D1",
+          pantone_value: "15-4020",
+        },
+        {
+          id: 2,
+          name: "fuchsia rose",
+          year: 2001,
+          color: "#C74375",
+          pantone_value: "17-2031",
+        },
+        {
+          id: 3,
+          name: "true red",
+          year: 2002,
+          color: "#BF1932",
+          pantone_value: "19-1664",
+        },
+        {
+          id: 4,
+          name: "aqua sky",
+          year: 2003,
+          color: "#7BC4C4",
+          pantone_value: "14-4811",
+        },
+        {
+          id: 5,
+          name: "tigerlily",
+          year: 2004,
+          color: "#E2583E",
+          pantone_value: "17-1456",
+        },
+        {
+          id: 6,
+          name: "blue turquoise",
+          year: 2005,
+          color: "#53B0AE",
+          pantone_value: "15-5217",
+        },
+      ],
+      support: {
+        url: "https://reqres.in/#support-heading",
+        text: "To keep ReqRes free, contributions towards server costs are appreciated!",
+      },
+    };
+    const listResourceResponse = await request.get(`${baseUrl}/api/unknown`);
+    expect(listResourceResponse.status()).toBe(200);
+    expect(listResourceResponse.statusText()).toBe(ststusTextOk);
+    expect(await listResourceResponse.json()).toEqual(responseListResource);
+  });
+
+  test("Validate getting Single <RESOURCE> by GET API call", async ({
+    request,
+  }) => {
+    const responseSingleResource = {
+      data: {
+        id: 2,
+        name: "fuchsia rose",
+        year: 2001,
+        color: "#C74375",
+        pantone_value: "17-2031",
+      },
+      support: {
+        url: "https://reqres.in/#support-heading",
+        text: "To keep ReqRes free, contributions towards server costs are appreciated!",
+      },
+    };
+    const singleResourceResponse = await request.get(
+      `${baseUrl}/api/unknown/2`
+    );
+    expect(singleResourceResponse.status()).toBe(200);
+    expect(singleResourceResponse.statusText()).toBe(ststusTextOk);
+    expect(await singleResourceResponse.json()).toEqual(responseSingleResource);
+  });
+
+  test("Validate getting Single <RESOURCE> Not Found by GET API call", async ({
+    request,
+  }) => {
+    const responseSingleResourceNotFound = {};
+    const singleResourceNotFoundResponse = await request.get(
+      `${baseUrl}/api/unknown/23`
+    );
+    expect(singleResourceNotFoundResponse.status()).toBe(404);
+    expect(singleResourceNotFoundResponse.statusText()).toBe(
+      ststusTextNotFound
+    );
+    expect(await singleResourceNotFoundResponse.json()).toEqual(
+      responseSingleResourceNotFound
+    );
   });
 
   test("Validate user creation by API call", async ({ request }) => {
@@ -44,7 +222,6 @@ test.describe("API Tests Block", () => {
     const userCreationResponse = await request.post(`${baseUrl}/api/users`, {
       data,
     });
-
     expect(userCreationResponse.status()).toBe(201);
     expect(userCreationResponse.statusText()).toBe("Created");
     const jsonResponse: IResponse = await userCreationResponse.json();
@@ -54,15 +231,36 @@ test.describe("API Tests Block", () => {
     expect(jsonResponse.id).toBeDefined();
   });
 
-  test("Validate update information by PATCH API method", async ({request}) => {
+  test("Validate Update User by PUT API call", async ({ request }) => {
     const data = {
       name: "morpheus",
       job: "zion resident",
     };
-    const updatedUserResponse = await request.patch(`${baseUrl}/api/users/2`, {data});
+    const updateUserByPutResponse = await request.put(
+      `${baseUrl}/api/users/2`,
+      { data }
+    );
+    expect(updateUserByPutResponse.status()).toBe(200);
+    expect(updateUserByPutResponse.statusText()).toBe(ststusTextOk);
+    const jsonResponse: IResponse = await updateUserByPutResponse.json();
+    expect(jsonResponse.name).toBe(data.name);
+    expect(jsonResponse.job).toBe(data.job);
+    expect(jsonResponse.updatedAt).toBeDefined();
+  });
+
+  test("Validate update information by PATCH API method", async ({
+    request,
+  }) => {
+    const data = {
+      name: "morpheus",
+      job: "zion resident",
+    };
+    const updatedUserResponse = await request.patch(`${baseUrl}/api/users/2`, {
+      data,
+    });
     const jsonResponse: IResponse = await updatedUserResponse.json();
     expect(updatedUserResponse.status()).toBe(200);
-    expect(updatedUserResponse.statusText()).toBe("OK");
+    expect(updatedUserResponse.statusText()).toBe(ststusTextOk);
     expect(jsonResponse.name).toEqual(data.name);
     expect(jsonResponse.job).toEqual(data.job);
     expect(jsonResponse.updatedAt).toBeDefined();
@@ -79,13 +277,12 @@ test.describe("API Tests Block", () => {
       email: "eve.holt@reqres.in",
       password: "glockpistol",
     };
-
     const registerSuccessfullResponse = await request.post(
       `${baseUrl}/api/register`,
       { data }
     );
     expect(registerSuccessfullResponse.status()).toBe(200);
-    expect(registerSuccessfullResponse.statusText()).toBe("OK");
+    expect(registerSuccessfullResponse.statusText()).toBe(ststusTextOk);
     const jsonResponse: IResponse = await registerSuccessfullResponse.json();
     expect(jsonResponse.token).toBeDefined();
     expect(jsonResponse.id).toBeDefined();
@@ -95,7 +292,6 @@ test.describe("API Tests Block", () => {
     const data = {
       email: "sydney@fife",
     };
-
     const registerUnSuccessfullResponse = await request.post(
       `${baseUrl}/api/register`,
       { data }
@@ -111,22 +307,21 @@ test.describe("API Tests Block", () => {
       email: "eve.holt@reqres.in",
       password: "cityslicka",
     };
-
+    const responseToken = "QpwL5tke4Pnpja7X4";
     const loginSuccessfullResponse = await request.post(
       `${baseUrl}/api/login`,
       { data }
     );
     expect(loginSuccessfullResponse.status()).toBe(200);
-    expect(loginSuccessfullResponse.statusText()).toBe("OK");
+    expect(loginSuccessfullResponse.statusText()).toBe(ststusTextOk);
     const jsonResponse: IResponse = await loginSuccessfullResponse.json();
-    expect(jsonResponse.token).toBeDefined();
+    expect(jsonResponse.token).toBe(responseToken);
   });
 
   test("Validate Login - UnSuccessfull by API call", async ({ request }) => {
     const data = {
       email: "peter@klaven",
     };
-
     const loginUnSuccessfullResponse = await request.post(
       `${baseUrl}/api/login`,
       { data }
@@ -192,13 +387,11 @@ test.describe("API Tests Block", () => {
         text: "To keep ReqRes free, contributions towards server costs are appreciated!",
       },
     };
-
     const delayedResponseResponse = await request.get(
       `${baseUrl}/api/users?delay=3`
     );
-
     expect(delayedResponseResponse.status()).toBe(200);
-    expect(delayedResponseResponse.statusText()).toBe("OK");
+    expect(delayedResponseResponse.statusText()).toBe(ststusTextOk);
     expect(await delayedResponseResponse.json()).toEqual(
       responseDelayedResponseData
     );
