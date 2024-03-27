@@ -16,9 +16,7 @@ export default class CheckoutOverviewPage extends BasePage {
       '[class="summary_subtotal_label"]'
     );
     this.priceTotalTaxTextElement = page.locator('[class="summary_tax_label"]');
-    this.totalTextElement = page.locator(
-      '[class="summary_info_label summary_total_label"]'
-    );
+    this.totalTextElement = page.locator('[data-test="total-label"]');
   }
 
   public async clickFinishButton() {

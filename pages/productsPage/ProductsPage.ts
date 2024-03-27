@@ -19,8 +19,8 @@ export default class ProductsPage extends BasePage {
     this.inventoryItemNameElement = this.page.locator(
       '[class="inventory_item_name "]'
     );
-    this.sortSelect = this.page.locator('[data-test="product_sort_container"]');
-    this.cartBadgeSelector = this.page.locator('[class="shopping_cart_badge"]');
+    this.sortSelect = this.page.locator('[data-test="product-sort-container"]');
+    this.cartBadgeSelector = this.page.locator('[data-test="shopping-cart-badge"]');
   }
 
   // public async chooseProductByTitle(expextedProductTitle: string) {
